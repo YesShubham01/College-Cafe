@@ -29,16 +29,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         FoodTypeNavBar(),
-        SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            // idk
-            child: Row(
-              children: [
-                // FoodItem(),
-                // FoodItem(),
-                // FoodItem(),
-              ],
-            ))
       ]),
     );
   }

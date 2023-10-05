@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyC-Jf-0SA4jY28HMu4IX_QYMzul1DmCrng</string>
+	<key>GCM_SENDER_ID</key>
+	<string>157611256738</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.cafe</string>
+	<key>PROJECT_ID</key>
+	<string>cafe-backend-dfb00</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cafe-backend-dfb00.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:157611256738:ios:d14b943d879b9afd5ee0fb</string>
+</dict>
+</plist>

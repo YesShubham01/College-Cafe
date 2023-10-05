@@ -1,12 +1,12 @@
-import "package:cafe/pages/content/favourite_page.dart";
-import "package:cafe/pages/content/history_page.dart";
-import "package:cafe/pages/content/home_page.dart";
-import "package:cafe/pages/content/profile_page.dart";
+import 'package:cafe/pages/MainPage%20Content/favourite_page.dart';
+import 'package:cafe/pages/MainPage%20Content/history_page.dart';
+import 'package:cafe/pages/MainPage%20Content/ProfilePage%20Widgets/profile_page.dart';
 import "package:cafe/theme/color_theme.dart";
 import "package:cafe/widgets/drawer_widget.dart";
 import "package:flutter/material.dart";
 
-import "order_page.dart";
+import 'MainPage Content/HomePage Widgets/home_page2.dart';
+import 'Order Page/order_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -26,7 +26,7 @@ class _MainPageState extends State<MainPage> {
 
   _body_select_element_at(int index) {
     if (index == 0) {
-      return const HomePage();
+      return const HomePage2();
     } else if (index == 1) {
       return const FavouritePage();
     } else if (index == 2) {
@@ -41,6 +41,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       // app bar
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white),
         backgroundColor: PRIMARY_COLOR,
 
         // Title

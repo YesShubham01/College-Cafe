@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/food_item_widget.dart';
-
 class FoodItemView extends StatefulWidget {
   const FoodItemView({super.key});
 
@@ -35,8 +33,8 @@ class _TwoItemsState extends State<TwoItems> {
   Widget build(BuildContext context) {
     return const Row(
       children: [
-        FoodItem(),
-        FoodItem(),
+        // FoodItem(),
+        // FoodItem(),
       ],
     );
   }

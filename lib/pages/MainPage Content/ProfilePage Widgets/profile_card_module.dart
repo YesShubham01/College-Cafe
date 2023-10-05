@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+class ProfileModulePage extends StatelessWidget {
+  final String name;
+  const ProfileModulePage({super.key, required this.name});
 
-  @override
-  State<ProfilePage> createState() => _ProfilePageState();
-}
-
-class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -38,13 +34,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Image.asset("images/ymca_logo.png"),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(0, 60, 20, 0),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 60, 20, 0),
                 child: Column(
                   children: [
-                    Text("Name", textAlign: TextAlign.left),
-                    Text("     Phone no.", textAlign: TextAlign.left),
-                    Text("      Other Detail", textAlign: TextAlign.left),
+                    Text(name, textAlign: TextAlign.left),
+                    const Text("     Phone no.", textAlign: TextAlign.left),
+                    const Text("      Other Detail", textAlign: TextAlign.left),
                   ],
                 ),
               )

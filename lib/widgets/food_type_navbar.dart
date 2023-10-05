@@ -1,5 +1,4 @@
 import 'package:cafe/pages/Food%20Menu/food_items.dart';
-import 'package:cafe/widgets/food_item_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../theme/color_theme.dart';
@@ -17,21 +16,6 @@ class _FoodTypeNavBarState extends State<FoodTypeNavBar> {
     setState(() {
       _selectedIndex = index;
     });
-  }
-
-  _color_from_index(int selectedIndex) {
-    if (_selectedIndex == 0) {
-      return Colors.orange;
-    }
-    if (selectedIndex == 1) {
-      return Colors.green;
-    }
-    if (selectedIndex == 2) {
-      return Colors.pink;
-    }
-    if (selectedIndex == 3) {
-      return Colors.cyan;
-    }
   }
 
   _item_from_index() {
