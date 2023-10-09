@@ -1,19 +1,20 @@
-import 'package:cafe/pages/MainPage%20Content/HomePage%20Widgets/food_searchbar.dart';
-import 'package:cafe/pages/MainPage%20Content/HomePage%20Widgets/head_text.dart';
 import 'package:flutter/material.dart';
-import 'package:cafe/Services/FireStore Service/firestore_services.dart';
+
+import '../../../Services/FireStore Service/firestore_services.dart';
 import '../../../Services/FireStore Service/single_item_data.dart';
 import '../../../theme/color_theme.dart';
 import '../../../widgets/two_food_items_widget.dart';
+import 'food_searchbar.dart';
+import 'head_text.dart';
 
-class HomePage2 extends StatefulWidget {
-  const HomePage2({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
-  State<HomePage2> createState() => _HomePage2State();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePage2State extends State<HomePage2> {
+class _HomePageState extends State<HomePage> {
   int _food_type_index = 0;
   final String _test = '';
   _onItemTapped(int index) {
@@ -24,8 +25,12 @@ class _HomePage2State extends State<HomePage2> {
 
   _get_fetched_fooditems() {
     if (_food_type_index == 0) {
-      SingleItemData i =
-          SingleItemData(name: "Name", price: 00, image: "Image", id: -1);
+      SingleItemData i = SingleItemData(
+          name: ":)",
+          price: 00,
+          image:
+              "https://firebasestorage.googleapis.com/v0/b/cafe-backend-dfb00.appspot.com/o/icon.png?alt=media&token=1e1b0cdb-193d-42f8-987f-45bad70d4f0d&_gl=1*vmj21e*_ga*ODQyMjk1MTU3LjE2NzkyMjQxNDQ.*_ga_CW55HF8NVT*MTY5NjY4OTc5My4zMC4xLjE2OTY2OTMxNTQuNDkuMC4w",
+          id: -1);
       return TwoItems(
         item_1: i,
         item_2: i,
@@ -38,10 +43,10 @@ class _HomePage2State extends State<HomePage2> {
   // use Future Builder
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<SingleItemData>>(
-      future: FireStore().get_available_food_items(),
-      builder:
-          (BuildContext context, AsyncSnapshot<List<SingleItemData>> snapshot) {
+    return FutureBuilder<List<List<SingleItemData>>>(
+      future: FireStore().get_available_all_items(),
+      builder: (BuildContext context,
+          AsyncSnapshot<List<List<SingleItemData>>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return ListView.builder(
               itemCount: 4,
@@ -89,7 +94,8 @@ class _HomePage2State extends State<HomePage2> {
             color: Colors.red,
           );
         } else if (snapshot.hasData) {
-          List<SingleItemData>? listOfFood = snapshot.data;
+          List<SingleItemData>? listOfFood = snapshot.data![_food_type_index];
+
           if (snapshot.data == null) {
             return Container(
               height: 350,
@@ -99,11 +105,10 @@ class _HomePage2State extends State<HomePage2> {
               ),
             );
           } else {
-            _fetched_itemcount = listOfFood!.length;
+            _fetched_itemcount = listOfFood.length;
             // _test = listOfFood[0].name;
           }
           int counter = 0;
-          double halfOfFetchedItems = listOfFood.length / 2;
           return ListView.builder(
               itemCount: listOfFood.length + 3,
               itemBuilder: (BuildContext context, int index) {
@@ -141,20 +146,20 @@ class _HomePage2State extends State<HomePage2> {
                     elevation: 1,
                   );
                 } else if (index < (_fetched_itemcount / 2) + 3) {
-                  for (var k in listOfFood) {
-                    print(k.name);
-                  }
                   SingleItemData i = listOfFood[counter];
                   SingleItemData i2;
                   try {
                     i2 = listOfFood[counter + 1];
                   } catch (e) {
                     i2 = SingleItemData(
-                        name: "Name", price: 00, image: "Image", id: -1);
+                        name: ":)",
+                        price: 00,
+                        image:
+                            "https://firebasestorage.googleapis.com/v0/b/cafe-backend-dfb00.appspot.com/o/icon.png?alt=media&token=1e1b0cdb-193d-42f8-987f-45bad70d4f0d&_gl=1*vmj21e*_ga*ODQyMjk1MTU3LjE2NzkyMjQxNDQ.*_ga_CW55HF8NVT*MTY5NjY4OTc5My4zMC4xLjE2OTY2OTMxNTQuNDkuMC4w",
+                        id: -1);
                   }
 
                   counter += 2;
-                  print("$_fetched_itemcount \n\n");
                   return TwoItems(
                     item_1: i,
                     item_2: i2,

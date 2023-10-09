@@ -47,54 +47,6 @@ class DrawerWidget extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => const SplashPage()));
             },
           ),
-          ListTile(
-            leading: const Icon(
-              Icons.account_circle,
-            ),
-            title: const Text(
-              "Profile",
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.shopping_cart,
-            ),
-            title: const Text(
-              "Cart",
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.favorite,
-            ),
-            title: const Text(
-              "Favourites",
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            onTap: () {},
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.history,
-            ),
-            title: const Text(
-              "History",
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            onTap: () {},
-          ),
         ],
       ),
     );

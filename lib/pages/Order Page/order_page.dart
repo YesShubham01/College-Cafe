@@ -4,6 +4,7 @@ import 'package:cafe/pages/Order%20Page/loading_orderpage.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme/color_theme.dart';
+import '../Payment/payment_page.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({super.key});
@@ -13,11 +14,9 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  double _total_amount_double = 0;
+  int _total_amount_int = 0;
   List<SingleItemData> items = [
-    SingleItemData(
-        name: "Name", price: 100, image: "images/ymca_logo.png", id: 1),
-    SingleItemData(
-        name: "Name", price: 100, image: "images/ymca_logo.png", id: 1),
     SingleItemData(
         name: "Name", price: 100, image: "images/ymca_logo.png", id: 1),
     SingleItemData(
@@ -44,6 +43,11 @@ class _OrderPageState extends State<OrderPage> {
           } else {
             if (snapshot.hasData) {
               items = snapshot.data!;
+              _total_amount_double = 0; // to reset on refresh
+              for (var i in items) {
+                _total_amount_double += i.price;
+              }
+              _total_amount_int = _total_amount_double.round();
             } else {
               print("data not found");
             }
@@ -80,6 +84,14 @@ class _OrderPageState extends State<OrderPage> {
             }
             return Column(
               children: [
+                Center(
+                  child: Text(
+                    'Swipe items to remove from cart.',
+                    style: TextStyle(
+                        color: const Color.fromARGB(255, 170, 23, 13)
+                            .withOpacity(.9)),
+                  ),
+                ),
                 Expanded(
                   child: ListView.builder(
                       itemCount: items.length,
@@ -119,13 +131,20 @@ class _OrderPageState extends State<OrderPage> {
                         );
                       }),
                 ),
+                Text('Total Amount: Rs. ${_total_amount_int.toString()}',
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold)),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 50),
+                  padding: const EdgeInsets.fromLTRB(15, 10, 15, 50),
                   child: SizedBox(
                     height: 70,
                     width: 300,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) =>
+                                PaymentPage(amount: _total_amount_int)));
+                      },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: PRIMARY_COLOR,
                       ),

@@ -5,7 +5,7 @@ import "package:cafe/theme/color_theme.dart";
 import "package:cafe/widgets/drawer_widget.dart";
 import "package:flutter/material.dart";
 
-import 'MainPage Content/HomePage Widgets/home_page2.dart';
+import 'MainPage Content/HomePage Widgets/home_page.dart';
 import 'Order Page/order_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -26,7 +26,7 @@ class _MainPageState extends State<MainPage> {
 
   _body_select_element_at(int index) {
     if (index == 0) {
-      return const HomePage2();
+      return const HomePage();
     } else if (index == 1) {
       return const FavouritePage();
     } else if (index == 2) {

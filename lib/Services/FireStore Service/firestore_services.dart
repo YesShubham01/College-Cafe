@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cafe/Services/FireStore%20Service/single_item_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,6 +29,80 @@ class FireStore {
           id: data['id']);
       result.add(temp);
     }
+
+    return result;
+  }
+
+  Future<List<List<SingleItemData>>> get_available_all_items() async {
+    List<List<SingleItemData>> result = [];
+    final FirebaseFirestore firestore = FirebaseFirestore.instance;
+    // Reference to the "Menu" collection
+    CollectionReference menuCollection = firestore.collection('Menu');
+    // Reference to the "All Items" document
+    DocumentReference allItemsDocument = menuCollection.doc('All Items');
+
+    List<SingleItemData> food = [];
+    // Query a subcollection (e.g., "Food")
+    QuerySnapshot<Map<String, dynamic>> foodCollection = await allItemsDocument
+        .collection('Food')
+        .where('available', isEqualTo: true)
+        .get();
+
+    // Access documents within the "Food" subcollection
+    for (var doc in foodCollection.docs) {
+      Map<String, dynamic> data = doc.data();
+      // Access data in the document
+      SingleItemData temp = SingleItemData(
+          name: data['name'],
+          price: data['price'],
+          image: data['image'],
+          id: data['id']);
+      food.add(temp);
+    }
+    result.add(food);
+
+    List<SingleItemData> snack = [];
+    // Query a subcollection (e.g., "Food")
+    QuerySnapshot<Map<String, dynamic>> snackCollection = await allItemsDocument
+        .collection('Snack')
+        .where('available', isEqualTo: true)
+        .get();
+
+    // Access documents within the "Food" subcollection
+    for (var doc in snackCollection.docs) {
+      Map<String, dynamic> data = doc.data();
+      // Access data in the document
+      SingleItemData temp = SingleItemData(
+          name: data['name'],
+          price: data['price'],
+          image: data['image'],
+          id: data['id']);
+      snack.add(temp);
+    }
+    result.add(snack);
+
+    List<SingleItemData> drink = [];
+    // Query a subcollection (e.g., "Food")
+    QuerySnapshot<Map<String, dynamic>> drinkCollection = await allItemsDocument
+        .collection('Drinks')
+        .where('available', isEqualTo: true)
+        .get();
+
+    // Access documents within the "Food" subcollection
+    for (var doc in drinkCollection.docs) {
+      Map<String, dynamic> data = doc.data();
+      // Access data in the document
+      SingleItemData temp = SingleItemData(
+          name: data['name'],
+          price: data['price'],
+          image: data['image'],
+          id: data['id']);
+      drink.add(temp);
+    }
+    result.add(drink);
+
+    List<SingleItemData> others = [];
+    result.add(others);
 
     return result;
   }
@@ -199,21 +275,88 @@ class FireStore {
         if (userDoc.exists) {
           List<dynamic> cart = userDoc['cart'];
 
-          CollectionReference<Map<String, dynamic>> foodCollection =
-              firestore.collection('Menu').doc('All Items').collection('Food');
+          for (var element in cart) {
+            if (element < 200) {
+              CollectionReference<Map<String, dynamic>> foodCollection =
+                  firestore
+                      .collection('Menu')
+                      .doc('All Items')
+                      .collection('Food');
 
-          QuerySnapshot<Map<String, dynamic>> querySnapshot =
-              await foodCollection.where('id', whereIn: cart).get();
+              QuerySnapshot<Map<String, dynamic>> querySnapshot =
+                  await foodCollection.where('id', isEqualTo: element).get();
 
-          for (var doc in querySnapshot.docs) {
-            Map<String, dynamic> data = doc.data();
-            SingleItemData item = SingleItemData(
-              name: data['name'],
-              price: data['price'],
-              image: data['image'],
-              id: data['id'],
-            );
-            items.add(item);
+              for (var doc in querySnapshot.docs) {
+                Map<String, dynamic> data = doc.data();
+                SingleItemData item = SingleItemData(
+                  name: data['name'],
+                  price: data['price'],
+                  image: data['image'],
+                  id: data['id'],
+                );
+                items.add(item);
+              }
+            } else if (element < 300) {
+              CollectionReference<Map<String, dynamic>> snackCollection =
+                  firestore
+                      .collection('Menu')
+                      .doc('All Items')
+                      .collection('Snack');
+
+              QuerySnapshot<Map<String, dynamic>> querySnapshot =
+                  await snackCollection.where('id', isEqualTo: element).get();
+
+              for (var doc in querySnapshot.docs) {
+                Map<String, dynamic> data = doc.data();
+                SingleItemData item = SingleItemData(
+                  name: data['name'],
+                  price: data['price'],
+                  image: data['image'],
+                  id: data['id'],
+                );
+                items.add(item);
+              }
+            } else if (element < 400) {
+              CollectionReference<Map<String, dynamic>> drinkCollection =
+                  firestore
+                      .collection('Menu')
+                      .doc('All Items')
+                      .collection('Drinks');
+
+              QuerySnapshot<Map<String, dynamic>> querySnapshot =
+                  await drinkCollection.where('id', isEqualTo: element).get();
+
+              for (var doc in querySnapshot.docs) {
+                Map<String, dynamic> data = doc.data();
+                SingleItemData item = SingleItemData(
+                  name: data['name'],
+                  price: data['price'],
+                  image: data['image'],
+                  id: data['id'],
+                );
+                items.add(item);
+              }
+            } else {
+              CollectionReference<Map<String, dynamic>> otherCollection =
+                  firestore
+                      .collection('Menu')
+                      .doc('All Items')
+                      .collection('Other');
+
+              QuerySnapshot<Map<String, dynamic>> querySnapshot =
+                  await otherCollection.where('id', isEqualTo: element).get();
+
+              for (var doc in querySnapshot.docs) {
+                Map<String, dynamic> data = doc.data();
+                SingleItemData item = SingleItemData(
+                  name: data['name'],
+                  price: data['price'],
+                  image: data['image'],
+                  id: data['id'],
+                );
+                items.add(item);
+              }
+            }
           }
         } else {
           print('User document does not exist.');
