@@ -1,6 +1,6 @@
 # cafe
 
-A new Flutter project.
+"Built CollegeCafe app using Flutter for easy cafe management and ordering. Created a user-friendly experience with real-time updates and integrated payments. Demonstrated expertise in Flutter for efficient and user-centric mobile solutions."
 
 ## Getting Started
 
