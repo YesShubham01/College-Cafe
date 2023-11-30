@@ -24,7 +24,7 @@ class _FoodItemState extends State<FoodItem> {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 70, 10, 50),
+            padding: const EdgeInsets.fromLTRB(18, 70, 10, 50),
             child: SizedBox(
               height: 220,
               width: 160,
@@ -41,7 +41,7 @@ class _FoodItemState extends State<FoodItem> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(24, 10, 20, 50),
+            padding: const EdgeInsets.fromLTRB(32, 10, 20, 50),
             child: CircleAvatar(
               foregroundImage: NetworkImage(widget.data.image),
               radius: 65,

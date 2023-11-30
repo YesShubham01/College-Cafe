@@ -1,4 +1,4 @@
-import 'package:cafe/pages/main_page.dart';
+import 'package:cafe/pages/SplashPage/splash_page.dart';
 import 'package:cafe/theme/color_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,12 +22,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'College-Cafe',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: PRIMARY_COLOR),
         useMaterial3: true,
       ),
-      home: const MainPage(),
+      home: const SplashPage(),
     );
   }
 }

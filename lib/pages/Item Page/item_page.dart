@@ -25,8 +25,64 @@ class _ItemPageState extends State<ItemPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isFav = false;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () async {
+              if (isFav == false) {
+                await FireStore().addToFav(widget.data.id!);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Added to Favourites :)'),
+                    duration:
+                        Duration(seconds: 3), // Adjust the duration as needed
+                  ),
+                );
+              } else {
+                await FireStore().removeFromFav(widget.data.id!);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Removed to Favourites :)'),
+                    duration:
+                        Duration(seconds: 3), // Adjust the duration as needed
+                  ),
+                );
+              }
+
+              setState(() {
+                isFav = !isFav;
+              });
+            },
+            icon: FutureBuilder<bool>(
+                future: FireStore().isFav(widget.data.id!),
+                builder: (context, AsyncSnapshot<bool> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Icon(
+                      Icons.question_mark_rounded,
+                      color: Colors.red,
+                    );
+                  } else {
+                    if (snapshot.hasData) {
+                      isFav = snapshot.data!;
+                    }
+                    if (isFav) {
+                      return const Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                      );
+                    } else {
+                      return const Icon(
+                        Icons.favorite_outline,
+                        color: Colors.red,
+                      );
+                    }
+                  }
+                }),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Padding(

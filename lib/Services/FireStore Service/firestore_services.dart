@@ -188,6 +188,7 @@ class FireStore {
         Map<String, dynamic> data = {
           'name': auth.currentUser?.displayName,
           'cart': [],
+          'fav': [],
         };
         await FirebaseFirestore.instance
             .collection(
@@ -369,5 +370,196 @@ class FireStore {
     }
 
     return items;
+  }
+
+  Future<void> addToFav(int item) async {
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      String? userUid = auth.currentUser?.uid;
+
+      if (userUid != null) {
+        DocumentReference userDocRef =
+            FirebaseFirestore.instance.collection('Users').doc(userUid);
+
+        DocumentSnapshot userDoc = await userDocRef.get();
+        if (userDoc.exists) {
+          List<dynamic> fav = userDoc['fav'];
+          fav.add(item);
+
+          await userDocRef.update({'fav': fav});
+        } else {
+          print('User document does not exist.');
+        }
+      } else {
+        print('User is not logged in.');
+      }
+    } catch (e) {
+      print('Error adding item to cart: $e');
+    }
+  }
+
+  Future<void> removeFromFav(int item) async {
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      String? userUid = auth.currentUser?.uid;
+
+      if (userUid != null) {
+        DocumentReference userDocRef =
+            FirebaseFirestore.instance.collection('Users').doc(userUid);
+
+        DocumentSnapshot userDoc = await userDocRef.get();
+        if (userDoc.exists) {
+          List<dynamic> fav = userDoc['fav'];
+          fav.remove(item);
+
+          await userDocRef.update({'fav': fav});
+        } else {
+          print('User document does not exist.');
+        }
+      } else {
+        print('User is not logged in.');
+      }
+    } catch (e) {
+      print('Error removing item from fav: $e');
+    }
+  }
+
+  Future<List<SingleItemData>> getFavItems() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    List<SingleItemData> items = [];
+
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      String? userUid = auth.currentUser?.uid;
+
+      if (userUid != null) {
+        final FirebaseFirestore firestore = FirebaseFirestore.instance;
+        DocumentReference<Map<String, dynamic>> userDocRef =
+            firestore.collection('Users').doc(userUid);
+
+        DocumentSnapshot<Map<String, dynamic>> userDoc = await userDocRef.get();
+        if (userDoc.exists) {
+          List<dynamic> fav = userDoc['fav'];
+
+          for (var element in fav) {
+            if (element < 200) {
+              CollectionReference<Map<String, dynamic>> foodCollection =
+                  firestore
+                      .collection('Menu')
+                      .doc('All Items')
+                      .collection('Food');
+
+              QuerySnapshot<Map<String, dynamic>> querySnapshot =
+                  await foodCollection.where('id', isEqualTo: element).get();
+
+              for (var doc in querySnapshot.docs) {
+                Map<String, dynamic> data = doc.data();
+                SingleItemData item = SingleItemData(
+                  name: data['name'],
+                  price: data['price'],
+                  image: data['image'],
+                  id: data['id'],
+                );
+                items.add(item);
+              }
+            } else if (element < 300) {
+              CollectionReference<Map<String, dynamic>> snackCollection =
+                  firestore
+                      .collection('Menu')
+                      .doc('All Items')
+                      .collection('Snack');
+
+              QuerySnapshot<Map<String, dynamic>> querySnapshot =
+                  await snackCollection.where('id', isEqualTo: element).get();
+
+              for (var doc in querySnapshot.docs) {
+                Map<String, dynamic> data = doc.data();
+                SingleItemData item = SingleItemData(
+                  name: data['name'],
+                  price: data['price'],
+                  image: data['image'],
+                  id: data['id'],
+                );
+                items.add(item);
+              }
+            } else if (element < 400) {
+              CollectionReference<Map<String, dynamic>> drinkCollection =
+                  firestore
+                      .collection('Menu')
+                      .doc('All Items')
+                      .collection('Drinks');
+
+              QuerySnapshot<Map<String, dynamic>> querySnapshot =
+                  await drinkCollection.where('id', isEqualTo: element).get();
+
+              for (var doc in querySnapshot.docs) {
+                Map<String, dynamic> data = doc.data();
+                SingleItemData item = SingleItemData(
+                  name: data['name'],
+                  price: data['price'],
+                  image: data['image'],
+                  id: data['id'],
+                );
+                items.add(item);
+              }
+            } else {
+              CollectionReference<Map<String, dynamic>> otherCollection =
+                  firestore
+                      .collection('Menu')
+                      .doc('All Items')
+                      .collection('Other');
+
+              QuerySnapshot<Map<String, dynamic>> querySnapshot =
+                  await otherCollection.where('id', isEqualTo: element).get();
+
+              for (var doc in querySnapshot.docs) {
+                Map<String, dynamic> data = doc.data();
+                SingleItemData item = SingleItemData(
+                  name: data['name'],
+                  price: data['price'],
+                  image: data['image'],
+                  id: data['id'],
+                );
+                items.add(item);
+              }
+            }
+          }
+        } else {
+          print('User document does not exist.');
+        }
+      } else {
+        print('User is not logged in.');
+      }
+    } catch (e) {
+      print('Error fetching items from fav: $e');
+    }
+
+    return items;
+  }
+
+  Future<bool> isFav(int item) async {
+    try {
+      FirebaseAuth auth = FirebaseAuth.instance;
+      String? userUid = auth.currentUser?.uid;
+
+      if (userUid != null) {
+        DocumentReference userDocRef =
+            FirebaseFirestore.instance.collection('Users').doc(userUid);
+
+        DocumentSnapshot userDoc = await userDocRef.get();
+        if (userDoc.exists) {
+          List<dynamic> fav = userDoc['fav'];
+          return fav.contains(item);
+        } else {
+          // Create list
+          print('Document doesnt exist.');
+        }
+      } else {
+        print('User is not logged in.');
+      }
+    } catch (e) {
+      print('Error removing item from fav: $e');
+    }
+    return false;
   }
 }

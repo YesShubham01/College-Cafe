@@ -85,7 +85,12 @@ class _HomePageState extends State<HomePage> {
                     elevation: 1,
                   );
                 } else {
-                  return const CircularProgressIndicator();
+                  return const Padding(
+                    padding: EdgeInsets.only(top: 40),
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
                 }
               });
         } else if (snapshot.hasError) {

@@ -21,7 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // If the Future is still running, show a loading indicator
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             // If there's an error, display an error message
             return Text('Error: ${snapshot.error}');

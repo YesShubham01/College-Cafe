@@ -18,11 +18,15 @@ class _TwoItemsState extends State<TwoItems> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        FoodItem(
-          data: widget.item_1,
+        Expanded(
+          child: FoodItem(
+            data: widget.item_1,
+          ),
         ),
-        FoodItem(
-          data: widget.item_2,
+        Expanded(
+          child: FoodItem(
+            data: widget.item_2,
+          ),
         ),
       ],
     );

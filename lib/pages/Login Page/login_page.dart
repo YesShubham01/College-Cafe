@@ -19,6 +19,13 @@ class LoginPageState extends State<LoginPage> {
   final _email_controller = TextEditingController();
   final _password_controller = TextEditingController();
 
+  @override
+  void dispose() {
+    super.dispose();
+    _email_controller.dispose();
+    _password_controller.dispose();
+  }
+
   _login_or_signup_state(int index) {
     setState(() {
       state = index;

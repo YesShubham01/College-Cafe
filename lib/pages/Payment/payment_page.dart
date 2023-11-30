@@ -78,6 +78,11 @@ class _PaymentPageState extends State<PaymentPage> {
     } catch (e) {
       print("mew3 error:$e");
     }
+
+    //! remove this later
+    // await Future.delayed(const Duration(seconds: 5));
+    // Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(builder: (context) => const OrderWaiting()));
   }
 
   @override
